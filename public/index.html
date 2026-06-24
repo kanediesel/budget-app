@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <!-- viewport-fit=cover is REQUIRED so we can use safe-area insets (notch / Dynamic Island / home bar) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <title>Budget</title>
+
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <meta name="theme-color" content="#0c1b2a" />
+
+  <!-- iOS home-screen / standalone behavior -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Budget" />
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+
+  <link rel="icon" href="/icons/icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div id="installNudge" class="install-nudge" hidden>
+    <span>Install: tap <b>Share</b> ▸ <b>Add to Home Screen</b>.</span>
+    <button id="installDismiss" aria-label="Dismiss">✕</button>
+  </div>
+
+  <!-- Lock screen (placeholder for the real passkey/Face ID auth coming next) -->
+  <section id="lock" class="screen lock">
+    <div class="lock-card">
+      <div class="brand"><img src="/icons/icon.svg" alt="" width="56" height="56" /><h1>Budget</h1></div>
+      <p class="muted">Private household budget</p>
+      <button id="unlockBtn" class="primary">Unlock</button>
+      <p class="tiny muted">Placeholder — real Face ID / passkey 2FA is the next build step.</p>
+    </div>
+  </section>
+
+  <!-- App shell -->
+  <main id="app" class="screen app" hidden>
+    <header class="topbar">
+      <h1>Budget</h1>
+      <button id="lockBtn" class="ghost" aria-label="Lock">Lock</button>
+    </header>
+
+    <div class="content">
+      <div class="card">
+        <h2>Shell is working ✅</h2>
+        <p class="muted">iPhone shell checks:</p>
+        <ul id="checks" class="checks">
+          <li data-k="standalone">Installed to Home Screen</li>
+          <li data-k="safearea">Safe-area insets respected</li>
+          <li data-k="sw">Service worker registered</li>
+          <li data-k="online">Online</li>
+          <li data-k="api">Server reachable</li>
+        </ul>
+      </div>
+      <div class="card placeholder">
+        <h2>Budget gauges</h2>
+        <p class="muted">Coming next — Grocery, Eating Out, Entertainment (monthly) + Vacation &amp; Savings (goals).</p>
+      </div>
+    </div>
+
+    <nav class="tabbar">
+      <button class="tab active">Home</button>
+      <button class="tab" disabled>Add</button>
+      <button class="tab" disabled>Receipt</button>
+      <button class="tab" disabled>Chat</button>
+    </nav>
+  </main>
+
+  <!-- tiny on-screen debug console (no Mac needed): add ?debug=1 to the URL -->
+  <script>
+    if (new URLSearchParams(location.search).get('debug') === '1') {
+      var s = document.createElement('script'); s.src = 'https://cdn.jsdelivr.net/npm/eruda'; s.onload = function () { window.eruda && eruda.init(); }; document.head.appendChild(s);
+    }
+  </script>
+  <script src="/app.js" type="module"></script>
+</body>
+</html>

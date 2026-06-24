@@ -1,0 +1,17 @@
+# Render blueprint. Connect this repo in Render → it picks this up.
+# (Cron jobs for the daily account sync get added here later.)
+services:
+  - type: web
+    name: budget-app
+    runtime: node
+    plan: starter
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      # Set these in the Render dashboard (do NOT commit secrets):
+      # SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE,
+      # GOOGLE_SERVICE_ACCOUNT_JSON, SHEET_ID, ANTHROPIC_API_KEY,
+      # PLAID_CLIENT_ID, PLAID_SECRET

@@ -1,0 +1,88 @@
+:root {
+  --bg: #0c1b2a;
+  --bg-2: #11293d;
+  --card: #14314a;
+  --text: #eef4f9;
+  --muted: #9fb6c8;
+  --accent: #45c4a8;   /* gauge teal */
+  --line: #20415c;
+  --ok: #45c4a8;
+  --bad: #e06a6a;
+  /* safe-area shortcuts */
+  --sat: env(safe-area-inset-top);
+  --sab: env(safe-area-inset-bottom);
+  --sal: env(safe-area-inset-left);
+  --sar: env(safe-area-inset-right);
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+[hidden] { display: none !important; }  /* must beat .screen{display:flex} so toggling works */
+html, body { margin: 0; height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.45 -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  /* use dynamic viewport height to dodge the iOS 100vh bug */
+  min-height: 100dvh;
+  overscroll-behavior-y: none;
+}
+h1 { font-size: 20px; margin: 0; }
+h2 { font-size: 17px; margin: 0 0 6px; }
+.muted { color: var(--muted); }
+.tiny { font-size: 12px; }
+
+.screen { min-height: 100dvh; display: flex; flex-direction: column; }
+
+/* ---------- Lock screen ---------- */
+.lock { align-items: center; justify-content: center;
+  padding: calc(var(--sat) + 24px) calc(var(--sar) + 24px) calc(var(--sab) + 24px) calc(var(--sal) + 24px); }
+.lock-card { text-align: center; max-width: 320px; }
+.brand { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 6px; }
+.brand img { border-radius: 12px; }
+.primary {
+  margin-top: 18px; width: 100%; padding: 14px; border: 0; border-radius: 14px;
+  background: var(--accent); color: #04231c; font-weight: 700; font-size: 16px;
+}
+.primary:active { opacity: .85; }
+
+/* ---------- App shell ---------- */
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: calc(var(--sat) + 12px) calc(var(--sar) + 16px) 12px calc(var(--sal) + 16px);
+  background: var(--bg-2); border-bottom: 1px solid var(--line);
+  position: sticky; top: 0; z-index: 5;
+}
+.ghost { background: transparent; color: var(--muted); border: 1px solid var(--line); border-radius: 10px; padding: 6px 12px; }
+
+.content {
+  flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  padding: 16px calc(var(--sar) + 16px) 16px calc(var(--sal) + 16px);
+  display: flex; flex-direction: column; gap: 14px;
+}
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 16px; }
+.card.placeholder { opacity: .7; }
+
+.checks { list-style: none; padding: 0; margin: 10px 0 0; }
+.checks li { padding: 8px 0; border-top: 1px solid var(--line); display: flex; align-items: center; gap: 10px; }
+.checks li:first-child { border-top: 0; }
+.checks li::before { content: "•"; color: var(--muted); width: 18px; text-align: center; }
+.checks li.pass::before { content: "✓"; color: var(--ok); }
+.checks li.fail::before { content: "✕"; color: var(--bad); }
+
+/* ---------- Bottom tab bar (own nav, since standalone has no browser chrome) ---------- */
+.tabbar {
+  display: flex; gap: 4px; background: var(--bg-2); border-top: 1px solid var(--line);
+  padding: 8px calc(var(--sar) + 8px) calc(var(--sab) + 8px) calc(var(--sal) + 8px);
+}
+.tab { flex: 1; background: transparent; color: var(--muted); border: 0; border-radius: 10px; padding: 10px 0; font-size: 13px; }
+.tab.active { color: var(--text); background: var(--card); }
+.tab:disabled { opacity: .4; }
+
+/* ---------- Install nudge ---------- */
+.install-nudge {
+  position: fixed; left: 12px; right: 12px; top: calc(var(--sat) + 10px); z-index: 20;
+  background: var(--accent); color: #04231c; border-radius: 12px; padding: 10px 12px;
+  display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600;
+  box-shadow: 0 8px 24px rgba(0,0,0,.35);
+}
+.install-nudge button { margin-left: auto; background: transparent; border: 0; color: #04231c; font-size: 16px; }
