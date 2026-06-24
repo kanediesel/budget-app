@@ -1,0 +1,24 @@
+-- Run this once in your Supabase project: SQL Editor → paste → Run.
+-- Tables are accessed only via the server (service-role key), so RLS is on with no public
+-- policies (service role bypasses RLS; the anon/publishable key can't read these).
+
+create table if not exists app_users (
+  id           uuid primary key default gen_random_uuid(),
+  email        text unique not null,
+  display_name text,
+  created_at   timestamptz default now()
+);
+
+create table if not exists webauthn_credentials (
+  id          text primary key,                 -- base64url credential ID
+  user_id     uuid not null references app_users(id) on delete cascade,
+  public_key  text not null,                     -- base64url
+  counter     bigint not null default 0,
+  transports  text[],
+  created_at  timestamptz default now()
+);
+create index if not exists idx_webauthn_user on webauthn_credentials(user_id);
+
+alter table app_users enable row level security;
+alter table webauthn_credentials enable row level security;
+-- (no policies on purpose — only the server's service-role key touches these)

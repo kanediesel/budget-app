@@ -25,21 +25,26 @@
     <button id="installDismiss" aria-label="Dismiss">✕</button>
   </div>
 
-  <!-- Lock screen (placeholder for the real passkey/Face ID auth coming next) -->
+  <!-- Lock screen — passkey / Face ID -->
   <section id="lock" class="screen lock">
     <div class="lock-card">
       <div class="brand"><img src="/icons/icon.svg" alt="" width="56" height="56" /><h1>Budget</h1></div>
       <p class="muted">Private household budget</p>
-      <button id="unlockBtn" class="primary">Unlock</button>
-      <p class="tiny muted">Placeholder — real Face ID / passkey 2FA is the next build step.</p>
+      <button id="loginBtn" class="primary">Sign in with Face ID</button>
+      <div id="authMsg" class="tiny authmsg"></div>
+      <details class="setup">
+        <summary class="tiny muted">First time on this device? Set up a passkey</summary>
+        <input id="regEmail" type="email" inputmode="email" autocomplete="email" placeholder="your email" />
+        <button id="registerBtn" class="ghost">Create passkey (Face ID)</button>
+      </details>
     </div>
   </section>
 
   <!-- App shell -->
   <main id="app" class="screen app" hidden>
     <header class="topbar">
-      <h1>Budget</h1>
-      <button id="lockBtn" class="ghost" aria-label="Lock">Lock</button>
+      <div><h1>Budget</h1><span id="who" class="tiny muted"></span></div>
+      <button id="lockBtn" class="ghost" aria-label="Sign out">Sign out</button>
     </header>
 
     <div class="content">
@@ -52,6 +57,7 @@
           <li data-k="sw">Service worker registered</li>
           <li data-k="online">Online</li>
           <li data-k="api">Server reachable</li>
+          <li data-k="sheet">Google Sheet connected</li>
         </ul>
       </div>
       <div class="card placeholder">

@@ -3,14 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "description": "Personal household budget PWA (Render web service + Supabase).",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
     "icons": "node scripts/generate-icons.js"
   },
   "dependencies": {
-    "express": "^4.21.2"
+    "@simplewebauthn/server": "^13.3.2",
+    "@supabase/supabase-js": "^2.108.2",
+    "cookie-parser": "^1.4.7",
+    "express": "^4.21.2",
+    "googleapis": "^173.0.0",
+    "jsonwebtoken": "^9.0.3"
   },
   "devDependencies": {
     "sharp": "^0.34.2"
