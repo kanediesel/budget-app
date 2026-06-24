@@ -17,7 +17,8 @@
     "cookie-parser": "^1.4.7",
     "express": "^4.21.2",
     "googleapis": "^173.0.0",
-    "jsonwebtoken": "^9.0.3"
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.22.0"
   },
   "devDependencies": {
     "sharp": "^0.34.2"
