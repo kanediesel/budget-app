@@ -1,6 +1,8 @@
 // PWA shell + passkey (Face ID) auth. Vanilla ES module.
 import { startRegistration, startAuthentication } from 'https://esm.sh/@simplewebauthn/browser@13';
 import { initBudget } from '/budget-ui.js';
+import { openAdd } from '/entry-ui.js';
+document.querySelector('#tabAdd')?.addEventListener('click', openAdd);
 
 const $ = (s) => document.querySelector(s);
 const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;

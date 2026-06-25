@@ -1,0 +1,19 @@
+{
+  "categories": {
+    "Shelter": ["Mortgage", "Maintenance", "Yard", "Cleaning", "Household Goods", "Digital Storage", "Security", "Furniture"],
+    "Transportation": ["Santa Fe Gas", "Train", "Bus", "Parking", "Tolls", "Air", "Rental", "Uber-Lyft", "Driver's License", "EV charging", "Ferry", "Car Purchase"],
+    "Santa Fe": ["Maintenance", "Improvements", "Misc.", "Repair"],
+    "Bolt": ["Maintenance", "Repair", "Improvements", "Misc"],
+    "Entertainment": ["Movies", "Rentals", "Books", "Play", "Tours", "Crafts", "Gifts", "Dance", "App Purchase", "Party", "TV", "Concert", "Music", "Misc.", "Theme Parks", "GA watch party", "Sporting events", "Camps"],
+    "Food": ["Publix", "Sprouts", "Whole Foods", "Wal-Mart", "Target", "Eating Out", "Convenience", "Costco", "CVS", "Amazon", "ALDI", "Drinks", "Drinks Out", "Cook Unity"],
+    "Health": ["Life Insurance", "Rx", "Doctor Visits", "Dental", "Orthodontist", "Fitness Classes", "Blood Work", "DEXA Scan", "Chiropractor", "Personal Training", "Health Insurance", "Toiletries", "Cosmetics", "Supplements", "Misc", "Mental Health", "Eye Care/Dr Visit", "Workout", "Gym", "Eye Care/Glasses", "Salon", "Physical Threapy", "HRT", "Oura Ring"],
+    "Clothing": ["Sofia", "Amanda", "Brian"],
+    "Business Expenses": ["Dept of Health", "Skaled", "AM", "Makanere", "Daily AI Show", "Sofia Paycheck"],
+    "School": ["Sofia", "Amanda", "Brian"],
+    "Personal": ["Donation", "Taxes", "Misc.", "Fees", "CC", "Bishop Tuition", "Hair Cut", "Sports"],
+    "Vacation": ["20th Anniversary", "Jackson Grad", "Uncle John", "Orlando May", "Key Largo-Feb", "Savannah"],
+    "Utilities": ["Power", "Cell Phone", "Water", "Gas", "Iphone Lease", "Internet", "Water Softner", "Auto Prop Insurance"]
+  },
+  "vacationOpen": true,
+  "accounts": ["Cash", "B-Capital One", "A-Capital One", "BILT", "Citi", "Marriott", "Apple", "USAA"]
+}

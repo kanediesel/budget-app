@@ -68,11 +68,26 @@
 
     <nav class="tabbar">
       <button class="tab active">Home</button>
-      <button class="tab" disabled>Add</button>
+      <button class="tab" id="tabAdd">Add</button>
       <button class="tab" disabled>Receipt</button>
       <button class="tab" disabled>Chat</button>
     </nav>
   </main>
+
+  <!-- Add transaction (manual: cash / oddities) -->
+  <div id="addModal" class="modal" hidden>
+    <div class="modal-card">
+      <header class="modal-head"><h2>Add transaction</h2><button id="addCancel" class="ghost">Cancel</button></header>
+      <label class="fld">Date<input id="fDate" type="date" /></label>
+      <label class="fld">Merchant<input id="fMerchant" type="text" placeholder="e.g. Farmers Market" autocomplete="off" /></label>
+      <label class="fld">Amount<input id="fAmount" type="number" inputmode="decimal" step="0.01" placeholder="0.00" /></label>
+      <label class="fld">Account<select id="fAccount"></select></label>
+      <label class="fld">Category<select id="fCategory"></select></label>
+      <label class="fld">Sub Category<span id="fSubWrap"></span></label>
+      <div id="addMsg" class="tiny authmsg"></div>
+      <button id="addSave" class="primary">Save to spreadsheet</button>
+    </div>
+  </div>
 
   <!-- tiny on-screen debug console (no Mac needed): add ?debug=1 to the URL -->
   <script>

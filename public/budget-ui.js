@@ -15,6 +15,7 @@ export function initBudget() {
   if (!inited) { buildSelectors(); inited = true; }
   load();
 }
+export function refreshBudget() { load(); }
 
 function buildSelectors() {
   const now = new Date();
