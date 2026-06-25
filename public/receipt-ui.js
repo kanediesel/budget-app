@@ -45,6 +45,7 @@ $('#rcptFile')?.addEventListener('change', async (e) => {
 });
 
 function renderResult(p) {
+  $('#rcptResult').hidden = false;
   $('#rcptMerchant').textContent = p.merchant || 'Receipt';
   $('#rcptDate').value = p.date || '';
   $('#rcptTotal').textContent = '$' + Number(p.total || 0).toFixed(2);
