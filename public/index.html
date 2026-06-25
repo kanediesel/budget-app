@@ -69,7 +69,7 @@
     <nav class="tabbar">
       <button class="tab active">Home</button>
       <button class="tab" id="tabAdd">Add</button>
-      <button class="tab" disabled>Receipt</button>
+      <button class="tab" id="tabReceipt">Receipt</button>
       <button class="tab" disabled>Chat</button>
     </nav>
   </main>
@@ -86,6 +86,28 @@
       <label class="fld">Sub Category<span id="fSubWrap"></span></label>
       <div id="addMsg" class="tiny authmsg"></div>
       <button id="addSave" class="primary">Save to spreadsheet</button>
+    </div>
+  </div>
+
+  <!-- Receipt: photo -> AI split -> edit -> save -->
+  <div id="receiptModal" class="modal" hidden>
+    <div class="modal-card">
+      <header class="modal-head"><h2>Receipt</h2><button id="rcptCancel" class="ghost">Cancel</button></header>
+      <label class="fld">Photo of receipt
+        <input id="rcptFile" type="file" accept="image/*" capture="environment" />
+      </label>
+      <div id="rcptStatus" class="tiny authmsg"></div>
+      <div id="rcptResult" hidden>
+        <div class="rcpt-head">
+          <b id="rcptMerchant"></b>
+          <span class="rcpt-meta"><input id="rcptDate" type="date" /> · total <b id="rcptTotal"></b></span>
+        </div>
+        <label class="fld">Account<select id="rcptAccount"></select></label>
+        <div id="rcptLines"></div>
+        <button id="rcptAddLine" class="ghost addline">+ Add split</button>
+        <div id="rcptSum" class="tiny"></div>
+        <button id="rcptSave" class="primary">Save to spreadsheet</button>
+      </div>
     </div>
   </div>
 

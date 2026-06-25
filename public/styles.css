@@ -127,3 +127,17 @@ h2 { font-size: 17px; margin: 0 0 6px; }
   border: 1px solid var(--line); background: var(--card); color: var(--text); font-size: 16px;
 }
 .modal .primary { margin-top: 18px; }
+
+/* ---------- Receipt split ---------- */
+#rcptFile { width: 100%; margin-top: 6px; color: var(--text); }
+.rcpt-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin: 14px 0 4px; flex-wrap: wrap; }
+.rcpt-meta { color: var(--muted); font-size: 13px; }
+.rcpt-meta input { background: var(--card); color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 4px 6px; }
+.rcpt-line { display: grid; grid-template-columns: 1fr 1fr auto auto; gap: 6px; align-items: center; margin-top: 8px; }
+.rcpt-line.flagged { outline: 1px solid var(--bad); border-radius: 10px; padding: 6px; }
+.rcpt-line select, .rcpt-line input { padding: 9px; border-radius: 10px; border: 1px solid var(--line); background: var(--card); color: var(--text); font-size: 15px; width: 100%; }
+.rcpt-line .ln-amt { max-width: 84px; }
+.rcpt-line .ln-del { background: transparent; border: 0; color: var(--muted); font-size: 16px; padding: 0 4px; }
+.rcpt-line .flagnote { grid-column: 1 / -1; color: var(--bad); }
+.addline { margin-top: 10px; }
+#rcptSum { margin-top: 12px; }

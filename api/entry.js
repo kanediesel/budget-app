@@ -6,10 +6,7 @@ const taxonomy = require('../lib/taxonomy.json');
 
 const router = express.Router();
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-const ACCOUNT_COLORS = {
-  'Cash': '#000000', 'B-Capital One': '#45818e', 'A-Capital One': '#ff0000', 'BILT': '#990000',
-  'Citi': '#ff00ff', 'Marriott': '#b45f06', 'Apple': '#1155cc', 'USAA': '#38761d',
-};
+const ACCOUNT_COLORS = sw.ACCOUNT_COLORS;
 
 // dropdown data (exclude Revenue — this form is for expenses)
 router.get('/taxonomy', requireAuth, (req, res) => {

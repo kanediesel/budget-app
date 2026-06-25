@@ -2,7 +2,9 @@
 import { startRegistration, startAuthentication } from 'https://esm.sh/@simplewebauthn/browser@13';
 import { initBudget } from '/budget-ui.js';
 import { openAdd } from '/entry-ui.js';
+import { openReceipt } from '/receipt-ui.js';
 document.querySelector('#tabAdd')?.addEventListener('click', openAdd);
+document.querySelector('#tabReceipt')?.addEventListener('click', openReceipt);
 
 const $ = (s) => document.querySelector(s);
 const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;

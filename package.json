@@ -12,6 +12,7 @@
     "icons": "node scripts/generate-icons.js"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.106.0",
     "@simplewebauthn/server": "^13.3.2",
     "@supabase/supabase-js": "^2.108.2",
     "cookie-parser": "^1.4.7",
