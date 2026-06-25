@@ -48,9 +48,13 @@
     </header>
 
     <div class="content">
-      <div class="card">
-        <h2>Shell is working ✅</h2>
-        <p class="muted">iPhone shell checks:</p>
+      <div class="period">
+        <select id="selMonth" class="sel" aria-label="Month"></select>
+        <select id="selYear" class="sel" aria-label="Year"></select>
+      </div>
+      <div id="gauges" class="gauges"><p class="muted tiny">Loading…</p></div>
+      <details class="diag">
+        <summary class="tiny muted">Diagnostics</summary>
         <ul id="checks" class="checks">
           <li data-k="standalone">Installed to Home Screen</li>
           <li data-k="safearea">Safe-area insets respected</li>
@@ -59,11 +63,7 @@
           <li data-k="api">Server reachable</li>
           <li data-k="sheet">Google Sheet connected</li>
         </ul>
-      </div>
-      <div class="card placeholder">
-        <h2>Budget gauges</h2>
-        <p class="muted">Coming next — Grocery, Eating Out, Entertainment (monthly) + Vacation &amp; Savings (goals).</p>
-      </div>
+      </details>
     </div>
 
     <nav class="tabbar">

@@ -16,6 +16,7 @@ app.use(cookieParser());
 app.get('/api/health', (req, res) => res.json({ ok: true, ts: new Date().toISOString() }));
 app.use('/api/auth', require('./api/auth'));
 app.use('/api/sheet', require('./api/sheet'));
+app.use('/api/budget', require('./api/budget'));
 
 // --- static PWA ---
 app.use(express.static(PUBLIC, {

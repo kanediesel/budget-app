@@ -19,6 +19,15 @@ create table if not exists webauthn_credentials (
 );
 create index if not exists idx_webauthn_user on webauthn_credentials(user_id);
 
+-- per-budget targets (set in the app). budget_key: grocery|eatingOut|entertainment|vacation|savings
+create table if not exists budget_targets (
+  budget_key text primary key,
+  amount     numeric not null default 0,
+  period     text not null default 'monthly',   -- monthly | annual
+  updated_at timestamptz default now()
+);
+alter table budget_targets enable row level security;
+
 alter table app_users enable row level security;
 alter table webauthn_credentials enable row level security;
 -- (no policies on purpose — only the server's service-role key touches these)

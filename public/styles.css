@@ -97,3 +97,18 @@ h2 { font-size: 17px; margin: 0 0 6px; }
 }
 .setup .ghost { width: 100%; padding: 12px; }
 .topbar #who { display: block; margin-top: 2px; }
+
+/* ---------- Budget gauges ---------- */
+.period { display: flex; gap: 10px; }
+.sel { flex: 1; padding: 11px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg-2); color: var(--text); font-size: 16px; }
+.gauges { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.gauge { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 12px 8px 6px; text-align: center; cursor: pointer; }
+.gauge:active { opacity: .85; }
+.gauge-title { font-size: 13px; color: var(--muted); margin-bottom: 2px; }
+.gauge-svg { width: 100%; height: auto; }
+.g-track { fill: none; stroke: var(--line); stroke-width: 13; stroke-linecap: round; }
+.g-val { fill: none; stroke-width: 13; stroke-linecap: round; }
+.g-pace { stroke: #eef4f9; stroke-width: 2.5; opacity: .8; }
+.g-spent { fill: var(--text); font-size: 26px; font-weight: 700; text-anchor: middle; }
+.g-sub { fill: var(--muted); font-size: 12px; text-anchor: middle; }
+.diag { margin-top: 4px; }

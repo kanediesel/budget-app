@@ -1,5 +1,6 @@
 // PWA shell + passkey (Face ID) auth. Vanilla ES module.
 import { startRegistration, startAuthentication } from 'https://esm.sh/@simplewebauthn/browser@13';
+import { initBudget } from '/budget-ui.js';
 
 const $ = (s) => document.querySelector(s);
 const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
@@ -23,7 +24,7 @@ $('#installDismiss')?.addEventListener('click', () => { $('#installNudge').hidde
 function showApp(user) {
   $('#lock').hidden = !!user ? true : false;
   $('#app').hidden = !!user ? false : true;
-  if (user) { $('#who').textContent = user.email || ''; runChecks(); }
+  if (user) { $('#who').textContent = user.email || ''; runChecks(); initBudget(); }
 }
 async function refreshSession() {
   try { const r = await fetch('/api/auth/me'); if (r.ok) { const { user } = await r.json(); showApp(user); return; } } catch {}
