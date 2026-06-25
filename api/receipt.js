@@ -13,6 +13,8 @@ router.post('/parse', requireAuth, async (req, res) => {
     const { image, mediaType } = req.body;
     if (!image) return res.status(400).json({ error: 'image (base64) required' });
     const parsed = await parse(image, mediaType || 'image/jpeg');
+    // resolve the account: cash (handwriting) > known card last-4 > unknown (let the user pick)
+    parsed.account = parsed.account === 'Cash' ? 'Cash' : (sw.LAST4_ACCOUNTS[parsed.cardLast4] || null);
     res.json(parsed);
   } catch (e) { console.error('receipt/parse', e); res.status(500).json({ error: e.message }); }
 });
@@ -22,6 +24,7 @@ router.post('/commit', requireAuth, async (req, res) => {
   try {
     let { date, merchant, total, account, lines } = req.body;
     if (!date || !merchant || !Array.isArray(lines) || !lines.length) return res.status(400).json({ error: 'date, merchant, lines required' });
+    if (!account) return res.status(400).json({ error: 'Pick the card/account this was paid with.' });
 
     const m = String(date).match(/^(\d{4})-(\d{2})-(\d{2})$/);
     if (!m) return res.status(400).json({ error: 'date must be YYYY-MM-DD' });
@@ -41,7 +44,7 @@ router.post('/commit', requireAuth, async (req, res) => {
       lines[idx].amount = Math.round((lines[idx].amount + diff) * 100) / 100;
     }
 
-    const result = await sw.writeSplit(tab, lines, { date: mdy, merchant: String(merchant).trim(), account: account || 'B-Capital One' });
+    const result = await sw.writeSplit(tab, lines, { date: mdy, merchant: String(merchant).trim(), account });
     res.json({ ok: true, tab, ...result, reconciledTotal: grand });
   } catch (e) { console.error('receipt/commit', e); res.status(500).json({ error: e.message }); }
 });

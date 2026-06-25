@@ -49,10 +49,11 @@ function renderResult(p) {
   $('#rcptMerchant').textContent = p.merchant || 'Receipt';
   $('#rcptDate').value = p.date || '';
   $('#rcptTotal').textContent = '$' + Number(p.total || 0).toFixed(2);
-  // account picker (default to handwriting-cash, else B-Capital One = your Apple Pay card)
+  // account picker — resolved from the receipt's card last-4 (or cash); if unknown, you pick.
   const accSel = $('#rcptAccount'); accSel.innerHTML = '';
+  if (!p.account) { const o = document.createElement('option'); o.value = ''; o.textContent = p.cardLast4 ? `— card …${p.cardLast4}: pick —` : '— pick card —'; accSel.appendChild(o); }
   (tax ? tax.accounts : ['Cash', 'B-Capital One']).forEach((a) => { const o = document.createElement('option'); o.value = a; o.textContent = a; accSel.appendChild(o); });
-  accSel.value = p.account || 'B-Capital One';
+  accSel.value = p.account || '';
   // lines
   $('#rcptLines').innerHTML = '';
   (p.lines || []).forEach((l) => addLineRow(l));
@@ -102,9 +103,11 @@ $('#rcptCancel')?.addEventListener('click', closeReceipt);
 $('#rcptSave')?.addEventListener('click', async () => {
   const lines = gatherLines();
   if (!lines.length) { $('#rcptStatus').textContent = 'Add at least one line.'; return; }
+  const account = $('#rcptAccount').value;
+  if (!account) { $('#rcptStatus').textContent = 'Pick the card/account this was paid with.'; return; }
   $('#rcptSave').disabled = true; $('#rcptStatus').textContent = 'Saving…';
   try {
-    const body = { date: $('#rcptDate').value, merchant: parsed.merchant, total: parsed.total, account: $('#rcptAccount').value, lines };
+    const body = { date: $('#rcptDate').value, merchant: parsed.merchant, total: parsed.total, account, lines };
     const r = await fetch('/api/receipt/commit', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
     const data = await r.json();
     if (!r.ok) throw new Error(data.error || 'save failed');
