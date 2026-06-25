@@ -19,6 +19,7 @@ app.use('/api/sheet', require('./api/sheet'));
 app.use('/api/budget', require('./api/budget'));
 app.use('/api/entry', require('./api/entry'));
 app.use('/api/receipt', require('./api/receipt'));
+app.use('/api/chat', require('./api/chat'));
 
 // --- static PWA ---
 app.use(express.static(PUBLIC, {

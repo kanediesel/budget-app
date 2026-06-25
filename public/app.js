@@ -3,8 +3,10 @@ import { startRegistration, startAuthentication } from 'https://esm.sh/@simplewe
 import { initBudget } from '/budget-ui.js';
 import { openAdd } from '/entry-ui.js';
 import { openReceipt } from '/receipt-ui.js';
+import { openChat } from '/chat-ui.js';
 document.querySelector('#tabAdd')?.addEventListener('click', openAdd);
 document.querySelector('#tabReceipt')?.addEventListener('click', openReceipt);
+document.querySelector('#tabChat')?.addEventListener('click', openChat);
 
 const $ = (s) => document.querySelector(s);
 const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;

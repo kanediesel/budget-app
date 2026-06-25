@@ -70,7 +70,7 @@
       <button class="tab active">Home</button>
       <button class="tab" id="tabAdd">Add</button>
       <button class="tab" id="tabReceipt">Receipt</button>
-      <button class="tab" disabled>Chat</button>
+      <button class="tab" id="tabChat">Chat</button>
     </nav>
   </main>
 
@@ -108,6 +108,19 @@
         <div id="rcptSum" class="tiny"></div>
         <button id="rcptSave" class="primary">Save to spreadsheet</button>
       </div>
+    </div>
+  </div>
+
+  <!-- Chat: ask the agent about the whole budget (2019 → now) -->
+  <div id="chatModal" class="modal" hidden>
+    <div class="modal-card chat-card">
+      <header class="modal-head"><h2>Ask the budget</h2><button id="chatCancel" class="ghost">Done</button></header>
+      <div id="chatLog" class="chat-log"></div>
+      <div id="chatSuggest" class="chat-suggest"></div>
+      <form id="chatForm" class="chat-composer">
+        <input id="chatInput" type="text" placeholder="e.g. How much did we spend on groceries this year?" autocomplete="off" enterkeyhint="send" />
+        <button id="chatSend" class="primary" type="submit" aria-label="Send">↑</button>
+      </form>
     </div>
   </div>
 

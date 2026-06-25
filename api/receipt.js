@@ -45,6 +45,7 @@ router.post('/commit', requireAuth, async (req, res) => {
     }
 
     const result = await sw.writeSplit(tab, lines, { date: mdy, merchant: String(merchant).trim(), account });
+    require('../lib/ledger').bust(); // chat agent should see this write immediately
     res.json({ ok: true, tab, ...result, reconciledTotal: grand });
   } catch (e) { console.error('receipt/commit', e); res.status(500).json({ error: e.message }); }
 });

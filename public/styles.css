@@ -141,3 +141,20 @@ h2 { font-size: 17px; margin: 0 0 6px; }
 .rcpt-line .flagnote { grid-column: 1 / -1; color: var(--bad); }
 .addline { margin-top: 10px; }
 #rcptSum { margin-top: 12px; }
+
+/* ---------- Chat ---------- */
+.chat-card { display: flex; flex-direction: column; height: 88dvh; }
+.chat-log { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; display: flex; flex-direction: column; gap: 10px; padding: 8px 2px; }
+.msg { max-width: 88%; padding: 10px 12px; border-radius: 14px; font-size: 15px; line-height: 1.4; white-space: pre-wrap; word-wrap: break-word; }
+.msg.me { align-self: flex-end; background: var(--accent); color: #04231c; border-bottom-right-radius: 4px; }
+.msg.bot { align-self: flex-start; background: var(--card); border: 1px solid var(--line); border-bottom-left-radius: 4px; }
+.msg.pending { opacity: .6; font-style: italic; }
+.msg-src { margin-top: 8px; padding-top: 6px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); }
+.msg-src a { color: var(--accent); }
+.chat-suggest { display: flex; flex-wrap: wrap; gap: 8px; padding: 8px 0; }
+.chip { background: var(--card); border: 1px solid var(--line); color: var(--text); border-radius: 999px; padding: 8px 12px; font-size: 13px; text-align: left; }
+.chip:active { opacity: .8; }
+.chat-composer { display: flex; gap: 8px; align-items: center; padding-top: 8px; border-top: 1px solid var(--line); }
+.chat-composer input { flex: 1; padding: 12px; border-radius: 14px; border: 1px solid var(--line); background: var(--card); color: var(--text); font-size: 16px; }
+.chat-composer .primary { width: 48px; min-width: 48px; height: 46px; margin: 0; padding: 0; border-radius: 14px; font-size: 20px; }
+.chat-composer .primary:disabled { opacity: .5; }

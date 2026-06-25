@@ -33,6 +33,7 @@ router.post('/', requireAuth, async (req, res) => {
     const color = ACCOUNT_COLORS[account] || '#000000';
     const row = [`${M}/${D}/${Y}`, String(merchant).trim(), account, amt, '', category, subcategory || ''];
     const written = await sw.appendExpenseRow(tab, row, color);
+    require('../lib/ledger').bust(); // chat agent should see this write immediately
     res.json({ ok: true, tab, row: written });
   } catch (e) { console.error('entry POST', e); res.status(500).json({ error: e.message }); }
 });
