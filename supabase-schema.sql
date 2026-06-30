@@ -31,3 +31,14 @@ alter table budget_targets enable row level security;
 alter table app_users enable row level security;
 alter table webauthn_credentials enable row level security;
 -- (no policies on purpose — only the server's service-role key touches these)
+
+-- Plaid connected accounts (moved off the local items.json so the sync can run on Render).
+-- access_token + the incremental cursor live here; touched ONLY by the server's service key.
+create table if not exists plaid_items (
+  label        text primary key,                 -- e.g. "B-Capital One", "Citi", "USAA"
+  access_token text not null,
+  cursor       text,                              -- Plaid transactionsSync cursor (incremental)
+  accounts     jsonb not null default '[]',       -- [{account_id, name, mask, subtype}]
+  updated_at   timestamptz default now()
+);
+alter table plaid_items enable row level security;

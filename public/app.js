@@ -4,6 +4,7 @@ import { initBudget } from '/budget-ui.js';
 import { openAdd } from '/entry-ui.js';
 import { openReceipt } from '/receipt-ui.js';
 import { openChat } from '/chat-ui.js';
+import '/sync-ui.js';
 document.querySelector('#tabAdd')?.addEventListener('click', openAdd);
 document.querySelector('#tabReceipt')?.addEventListener('click', openReceipt);
 document.querySelector('#tabChat')?.addEventListener('click', openChat);

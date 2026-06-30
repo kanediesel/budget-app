@@ -1,5 +1,4 @@
 # Render blueprint. Connect this repo in Render → it picks this up.
-# (Cron jobs for the daily account sync get added here later.)
 services:
   - type: web
     name: budget-app
@@ -12,6 +11,22 @@ services:
       - key: NODE_VERSION
         value: "20"
       # Set these in the Render dashboard (do NOT commit secrets):
-      # SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE,
-      # GOOGLE_SERVICE_ACCOUNT_JSON, SHEET_ID, ANTHROPIC_API_KEY,
-      # PLAID_CLIENT_ID, PLAID_SECRET
+      # SUPABASE_URL, SUPABASE_SERVICE_KEY, GOOGLE_SERVICE_ACCOUNT_JSON, SHEET_ID,
+      # ANTHROPIC_API_KEY, PLAID_CLIENT_ID, PLAID_SECRET, SESSION_SECRET,
+      # RP_ID, RP_ORIGIN, ALLOWED_EMAILS
+
+  # Daily account sync (Plaid -> categorize -> Google Sheet). Schedule is UTC.
+  # 03:00 UTC = 11 PM ET during EDT (summer) / 10 PM ET during EST (winter).
+  - type: cron
+    name: budget-daily-sync
+    runtime: node
+    plan: starter
+    buildCommand: npm install
+    schedule: "0 3 * * *"
+    startCommand: node cron-sync.js
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      # Same secrets as the web service — set in the Render dashboard:
+      # SUPABASE_URL, SUPABASE_SERVICE_KEY, GOOGLE_SERVICE_ACCOUNT_JSON, SHEET_ID,
+      # ANTHROPIC_API_KEY, PLAID_CLIENT_ID, PLAID_SECRET

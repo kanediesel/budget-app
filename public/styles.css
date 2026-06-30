@@ -112,6 +112,9 @@ h2 { font-size: 17px; margin: 0 0 6px; }
 .g-spent { fill: var(--text); font-size: 26px; font-weight: 700; text-anchor: middle; }
 .g-sub { fill: var(--muted); font-size: 12px; text-anchor: middle; }
 .diag { margin-top: 4px; }
+.syncbar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.syncbar #syncBtn { white-space: nowrap; }
+.syncbar #syncStatus { flex: 1; min-width: 140px; }
 
 /* ---------- Add modal ---------- */
 .modal { position: fixed; inset: 0; z-index: 30; background: rgba(4, 10, 18, .6); display: flex; align-items: flex-end; }
