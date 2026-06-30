@@ -115,6 +115,18 @@ h2 { font-size: 17px; margin: 0 0 6px; }
 .syncbar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .syncbar #syncBtn { white-space: nowrap; }
 .syncbar #syncStatus { flex: 1; min-width: 140px; }
+.sync-result:empty { display: none; }
+.sync-result { display: flex; flex-direction: column; gap: 4px; margin-top: 4px; }
+.sync-rows-head { font-size: 12px; color: var(--muted); margin: 2px 0; }
+.sync-warn { font-size: 13px; color: var(--bad); background: var(--card); border: 1px solid var(--bad); border-radius: 10px; padding: 8px 10px; }
+.syncrow { display: grid; grid-template-columns: auto 1fr auto; grid-template-areas: "d m a" "c c cat"; gap: 1px 8px; font-size: 13px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 7px 10px; }
+.syncrow.blank { border-color: var(--bad); }
+.sr-d { grid-area: d; color: var(--muted); }
+.sr-m { grid-area: m; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sr-a { grid-area: a; font-variant-numeric: tabular-nums; }
+.sr-c { grid-area: c; color: var(--muted); font-size: 11px; }
+.sr-cat { grid-area: cat; font-size: 11px; color: var(--muted); text-align: right; }
+.syncrow.blank .sr-cat { color: var(--bad); }
 
 /* ---------- Add modal ---------- */
 .modal { position: fixed; inset: 0; z-index: 30; background: rgba(4, 10, 18, .6); display: flex; align-items: flex-end; }

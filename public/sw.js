@@ -1,6 +1,6 @@
 // Service worker — NETWORK-FIRST for app assets so new deploys always show up
 // (no more stale-cache surprises). Falls back to cache only when offline.
-const CACHE = 'budget-shell-v6';
+const CACHE = 'budget-shell-v7';
 const ASSETS = ['/', '/index.html', '/styles.css', '/app.js', '/manifest.webmanifest', '/icons/icon.svg'];
 
 self.addEventListener('install', (e) => {
