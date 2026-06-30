@@ -41,7 +41,12 @@ async function runBankMonth(targetMonth, { year, dry = false } = {}) {
   const layout = await H.findLayout(targetMonth);
   if (!layout) return { month: targetMonth, error: `tab "${targetMonth}" not found`, written: 0 };
 
-  const bal = await plaid.accountsGet({ access_token: item.access_token });
+  let bal;
+  try { bal = await plaid.accountsGet({ access_token: item.access_token }); }
+  catch (e) {
+    const code = (e.response && e.response.data && e.response.data.error_code) || e.message;
+    return { month: targetMonth, skipped: `USAA needs re-login (${code})`, needsReauth: [{ label: LABEL, code }], written: 0 };
+  }
   const balOf = (id) => { const a = bal.data.accounts.find((x) => x.account_id === id); return a ? a.balances.current : null; };
   const savingsBal = savings ? balOf(savings.account_id) : null;
   const checkingBal = checking ? balOf(checking.account_id) : null;

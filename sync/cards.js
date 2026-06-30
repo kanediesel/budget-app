@@ -37,30 +37,38 @@ async function runCardsMonth(targetMonth, { dry = false } = {}) {
   const log = [];
 
   let pulled = [];
+  const needsReauth = [];
   for (const item of ccItems) {
     const creditIds = new Set((item.accounts || []).filter((a) => a.subtype === 'credit card').map((a) => a.account_id));
-    const got = await pullIncremental(plaid, item);
-    const kept = got.filter((t) => creditIds.has(t.account_id));
-    kept.forEach((t) => (t._label = item.label));
-    pulled.push(...kept);
-    if (!dry) await itemsStore.saveCursor(item.label, item.cursor); // persist advanced cursor
-    log.push(`${item.label}: pulled ${got.length}`);
+    try {
+      const got = await pullIncremental(plaid, item);
+      const kept = got.filter((t) => creditIds.has(t.account_id));
+      kept.forEach((t) => (t._label = item.label));
+      pulled.push(...kept);
+      if (!dry) await itemsStore.saveCursor(item.label, item.cursor); // persist advanced cursor
+      log.push(`${item.label}: pulled ${got.length}`);
+    } catch (e) {
+      // one stale/invalidated item must not kill the whole sync — skip it, keep going
+      const code = (e.response && e.response.data && e.response.data.error_code) || e.message;
+      needsReauth.push({ label: item.label, code });
+      log.push(`${item.label}: SKIPPED (${code})`);
+    }
   }
 
   const byMonth = {};
   pulled.filter((t) => !H.isPayment(t)).forEach((t) => { (byMonth[H.monthName(H.txnDate(t))] ||= []).push(t); });
   const monthTxns = byMonth[targetMonth] || [];
-  if (!monthTxns.length) return { month: targetMonth, log, written: 0, recurring: 0, blanked: [], rows: [] };
+  if (!monthTxns.length) return { month: targetMonth, log, needsReauth, written: 0, recurring: 0, blanked: [], rows: [] };
 
   const layout = await H.findLayout(targetMonth);
-  if (!layout) return { month: targetMonth, log, error: `tab "${targetMonth}" not found`, written: 0, recurring: 0, blanked: [], rows: [] };
+  if (!layout) return { month: targetMonth, log, needsReauth, error: `tab "${targetMonth}" not found`, written: 0, recurring: 0, blanked: [], rows: [] };
 
   const matchesSplit = (t) => (layout.splitMarkers || []).some((m) => {
     const n = H.cleanName(t).toLowerCase();
     return Math.abs(m.total - t.amount) < 0.01 && H.daysApart(m.iso, H.txnDate(t)) <= 4 && (m.merchant.includes(n) || n.includes(m.merchant));
   });
   const fresh = monthTxns.filter((t) => !layout.expenseKeys.has(H.dedupKey(H.txnDate(t), t.amount)) && !matchesSplit(t));
-  if (!fresh.length) return { month: targetMonth, log, written: 0, recurring: 0, blanked: [], rows: [], present: monthTxns.length };
+  if (!fresh.length) return { month: targetMonth, log, needsReauth, written: 0, recurring: 0, blanked: [], rows: [], present: monthTxns.length };
 
   const recurringNames = Object.values(layout.recurring).map((r) => r.name);
   const plan = await categorize(fresh, recurringNames);
@@ -96,7 +104,7 @@ async function runCardsMonth(targetMonth, { dry = false } = {}) {
   });
 
   const rows = expenseRows.map((r) => ({ date: r.values[0], merchant: r.values[1], card: r.label, amount: r.values[3], cat: r.values[5], sub: r.values[6] }));
-  if (dry) return { month: targetMonth, log, dry: true, written: 0, recurring: recurringUpdates.length, blanked, rows };
+  if (dry) return { month: targetMonth, log, needsReauth, dry: true, written: 0, recurring: recurringUpdates.length, blanked, rows };
 
   const SID = cfg.SHEET_ID, sheetId = layout.sheetId, s = await sheets.client();
   const data = recurringUpdates.flatMap((u) => ([
@@ -120,7 +128,7 @@ async function runCardsMonth(targetMonth, { dry = false } = {}) {
   });
   if (reqs.length) await s.spreadsheets.batchUpdate({ spreadsheetId: SID, requestBody: { requests: reqs } });
 
-  return { month: targetMonth, log, written: expenseRows.length, recurring: recurringUpdates.length, blanked, rows };
+  return { month: targetMonth, log, needsReauth, written: expenseRows.length, recurring: recurringUpdates.length, blanked, rows };
 }
 
 module.exports = { runCardsMonth };

@@ -12,11 +12,12 @@ async function runSync() {
     const r = await fetch('/api/sync', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ scope: 'all' }) });
     const d = await r.json();
     if (!r.ok) throw new Error(d.error || 'sync failed');
+    const reauth = (d.needsReauth && d.needsReauth.length) ? `  ⚠ Reconnect needed: ${d.needsReauth.map((r) => r.label).join(', ')}` : '';
     if (d.totalWritten) {
-      st.textContent = `Added ${d.totalWritten} new transaction(s) — ${d.summary}`;
+      st.textContent = `Added ${d.totalWritten} new transaction(s).` + reauth;
       refreshBudget();
     } else {
-      st.textContent = 'All caught up — nothing new to add.';
+      st.textContent = (reauth ? 'Nothing new.' + reauth : 'All caught up — nothing new to add.');
     }
   } catch (e) {
     st.textContent = e.message;

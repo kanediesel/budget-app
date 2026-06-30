@@ -25,14 +25,23 @@ async function runSync(opts = {}) {
 
   const result = { startedAt: now.toISOString(), scope, dry, cards: [], bank: [] };
   for (const m of months) {
-    result.cards.push(await runCardsMonth(m.name, { dry }));
-    if (scope === 'all') result.bank.push(await runBankMonth(m.name, { year: m.year, dry }));
+    try { result.cards.push(await runCardsMonth(m.name, { dry })); }
+    catch (e) { result.cards.push({ month: m.name, error: e.message, written: 0 }); }
+    if (scope === 'all') {
+      try { result.bank.push(await runBankMonth(m.name, { year: m.year, dry })); }
+      catch (e) { result.bank.push({ month: m.name, error: e.message, written: 0 }); }
+    }
   }
 
   const cardsWritten = result.cards.reduce((a, c) => a + (c.written || 0), 0);
   const bankWritten = result.bank.reduce((a, c) => a + (c.written || 0), 0);
   result.totalWritten = cardsWritten + bankWritten;
-  result.summary = `${dry ? '[dry] ' : ''}${cardsWritten} card + ${bankWritten} bank row(s) across ${months.map((m) => m.name).join(', ')}`;
+  // collect any items that need a Plaid re-login (update mode), de-duped by label
+  const reauth = {};
+  [...result.cards, ...result.bank].forEach((r) => (r.needsReauth || []).forEach((x) => { reauth[x.label] = x.code; }));
+  result.needsReauth = Object.entries(reauth).map(([label, code]) => ({ label, code }));
+  result.summary = `${dry ? '[dry] ' : ''}${cardsWritten} card + ${bankWritten} bank row(s) across ${months.map((m) => m.name).join(', ')}` +
+    (result.needsReauth.length ? ` — needs re-login: ${result.needsReauth.map((r) => r.label).join(', ')}` : '');
 
   if (!dry && result.totalWritten) ledger.bust(); // chat agent + any cache should see new rows
   return result;
