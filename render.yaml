@@ -9,7 +9,7 @@ services:
     autoDeploy: true
     envVars:
       - key: NODE_VERSION
-        value: "20"
+        value: "22"
       # Set these in the Render dashboard (do NOT commit secrets):
       # SUPABASE_URL, SUPABASE_SERVICE_KEY, GOOGLE_SERVICE_ACCOUNT_JSON, SHEET_ID,
       # ANTHROPIC_API_KEY, PLAID_CLIENT_ID, PLAID_SECRET, SESSION_SECRET,
@@ -26,7 +26,7 @@ services:
     startCommand: node cron-sync.js
     envVars:
       - key: NODE_VERSION
-        value: "20"
+        value: "22"
       # Same secrets as the web service — set in the Render dashboard:
       # SUPABASE_URL, SUPABASE_SERVICE_KEY, GOOGLE_SERVICE_ACCOUNT_JSON, SHEET_ID,
       # ANTHROPIC_API_KEY, PLAID_CLIENT_ID, PLAID_SECRET

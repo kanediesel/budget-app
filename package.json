@@ -4,7 +4,7 @@
   "private": true,
   "description": "Personal household budget PWA (Render web service + Supabase).",
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "scripts": {
     "start": "node server.js",
